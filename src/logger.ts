@@ -5,7 +5,7 @@ const {printf} = winston.format
 
 const logFormat = printf(({level, message}) => {
   const date = new Date()
-  const timestamp = `[${date.getHours()}:${date.getMinutes()};${date.getSeconds()}]`
+  const timestamp = `[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}]`
   return `${timestamp} ${level.toUpperCase()}: ${message}`
 })
 
@@ -16,8 +16,8 @@ export const log = winston.createLogger({
   transports: [
     // - Write all logs with importance level of `error` or less to `error.log`
     // - Write all logs with importance level of `info` or less to `combined.log`
-    new winston.transports.File({filename: 'error.log', level: 'error'}),
-    new winston.transports.File({filename: 'combined.log'})
+    new winston.transports.File({filename: 'logs/error.log', level: 'error'}),
+    new winston.transports.File({filename: 'logs/combined.log'})
   ]
 })
 

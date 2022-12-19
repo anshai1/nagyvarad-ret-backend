@@ -1,6 +1,6 @@
-import { User } from '../entity/user'
-import { fromNullable, Option } from 'fp-ts/Option'
-import { log } from '../../src/logger'
+import {User} from '../models/user'
+import {fromNullable, Option} from 'fp-ts/Option'
+import {log} from '../../src/logger'
 
 export const find_all = async (): Promise<Option<Array<User>>> => User.findAll()
   .then(users => fromNullable(users))
