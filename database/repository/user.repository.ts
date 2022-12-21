@@ -2,8 +2,8 @@ import {User} from '../models/user'
 import {fromNullable, Option} from 'fp-ts/Option'
 import {log} from '../../src/logger'
 
-export const find_all = async (): Promise<Option<Array<User>>> => User.findAll()
-  .then(users => fromNullable(users))
+export const find_all = async (): Promise<Array<User>> => User.findAll()
+  .then(users => users)
   .catch(error => {
     const error_message = `Failed to fetch users, ERROR: ${error.message}`
     log.error(error_message)
@@ -11,8 +11,8 @@ export const find_all = async (): Promise<Option<Array<User>>> => User.findAll()
     throw new Error(error_message)
   })
 
-export const save = async (user: User): Promise<Option<User>> => user.save()
-  .then(user => fromNullable(user))
+export const save = async (user: User): Promise<User> => user.save()
+  .then(user => user)
   .catch(error => {
     const error_message = `Failed to save user with name: ${user.username}, ERROR: ${error.message}`
     log.error(error_message)

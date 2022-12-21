@@ -32,6 +32,7 @@ export async function log_out(req: Request, res: Response) {
       const response = ApiResponse.for_failure([error])
 
       res
+        .status(200)
         .send(response)
     })
 

@@ -1,18 +1,15 @@
 import * as jwt from 'jsonwebtoken'
-import {pipe} from 'fp-ts/function'
-import {fromNullable, tryCatch} from 'fp-ts/Option'
 
-// TODO: move this to .env file
-const PRIVATE_KEY = 'PRIVATE_KEY_590318'
+const PRIVATE_KEY = process.env.JWT_PRIVATE_KEY || 'qFqws2_3-2!!-a07'
 
 export const sign = (body: any): string =>
   jwt.sign(body, PRIVATE_KEY)
 
-export function verify(token: string): boolean {
+export function verify(token: string): string {
   try {
     const decoded = jwt.verify(token, PRIVATE_KEY);
-    return true;
+    return <string>decoded;
   } catch (err) {
-    return false;
+    return '';
   }
 }

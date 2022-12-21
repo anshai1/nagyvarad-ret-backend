@@ -1,18 +1,18 @@
 import * as UR from '../../../database/repository/user.repository'
 import * as ATR from '../../../database/repository/auth_token.repository'
-import {NextFunction, Request, Response} from 'express'
-import {pipe} from 'fp-ts/function'
+import { NextFunction, Request, Response } from 'express'
+import { pipe } from 'fp-ts/function'
 import * as O from 'fp-ts/lib/Option'
-import {fromNullable, getOrElse, isNone, isSome, map} from 'fp-ts/lib/Option'
-import {ApiError} from '../../common/api_error'
-import {ApiResponse} from '../../common/api_response'
-import {AuthToken} from '../../../database/models/auth_token.model'
+import { fromNullable, getOrElse, isNone, isSome, map } from 'fp-ts/lib/Option'
+import { ApiError } from '../../common/api_error'
+import { ApiResponse } from '../../common/api_response'
+import { AuthToken } from '../../../database/models/auth_token.model'
 import * as BCRYPT from '../../common/util/bcrypt.util'
 import * as JWT from '../../common/util/jwt.util'
-import {Option} from 'fp-ts/Option'
-import {log} from '../../logger'
-import {LogInRQ} from '../../common/request/log_in.request'
-import {LogInRS} from '../../common/resposne/log_in.response'
+import { Option } from 'fp-ts/Option'
+import { log } from '../../logger'
+import { LogInRQ } from '../../common/request/log_in.request'
+import { LogInRS } from '../../common/resposne/log_in.response'
 
 export async function log_in(request: LogInRQ): Promise<ApiResponse<LogInRS>> {
   const {username, password} = request
@@ -58,17 +58,19 @@ export async function logOut(userId: number): Promise<void> {
   }
 }
 
-export const authorize_request = (req: Request, res: Response, next: NextFunction): void => {
+export const authorize_request = (req: Request, res: Response, next: NextFunction)  => {
   const has_access = pipe(
     parse_auth_token(req),
     getOrElse(() => ''),
+    // TODO: verify if the request is sent by a user that exists
+    // TODO: verify if the auth token belongs to the user that is using it
     auth_token => JWT.verify(auth_token))
 
-  if (!has_access) res
+  if (!has_access) return res
     .status(401)
     .send('UNAUTHORIZED')
 
-  next()
+  return next()
 }
 
 const parse_auth_token = (req: Request): O.Option<string> =>
@@ -81,7 +83,7 @@ async function get_existing_or_create_new_token(user_id: number) {
 const create_new_token = async (userId: number): Promise<AuthToken> => {
   const token = JWT.sign({user_id: userId})
   const auth_token: Option<AuthToken> = await ATR.create_for_user(userId, token)
-  if(isSome(auth_token)) {
+  if (isSome(auth_token)) {
     return auth_token.value
   } else {
     throw new Error(`Error while creating new auth token for user with id: ${userId}`)

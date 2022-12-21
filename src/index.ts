@@ -1,9 +1,9 @@
-import express, {Application} from 'express'
+import express, { Application } from 'express'
 import cors from 'cors'
 import helmet from 'helmet'
 import * as bodyParser from 'body-parser'
 import * as dotenv from 'dotenv'
-import {log, traffic_logger} from './logger'
+import { log, traffic_logger } from './logger'
 import router from './router'
 import database from '../database/database'
 
