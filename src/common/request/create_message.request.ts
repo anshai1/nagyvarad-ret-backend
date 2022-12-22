@@ -1,4 +1,4 @@
-import { MessageDTO } from '../dto/messageDTO'
+import { MessageDTO } from '../dto/message.dto'
 
 export class CreateMessageRQ {
   constructor(

@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response} from "express";
 import MS from "./messages.service";
-import {MessageDTO} from "../../common/dto/messageDTO";
+import {MessageDTO} from "../../common/dto/message.dto";
 import {pipe} from 'fp-ts/function';
 import { Message } from '../../../database/models/message.model'
 import { CreateMEssageRS } from '../../common/resposne/create_message.response'

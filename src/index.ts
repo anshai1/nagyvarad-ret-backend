@@ -6,6 +6,7 @@ import * as dotenv from 'dotenv'
 import { log, traffic_logger } from './logger'
 import router from './router'
 import database from '../database/database'
+import fileUpload from 'express-fileupload'
 
 dotenv.config()
 const PORT = process.env.PORT || '8085'
@@ -15,8 +16,13 @@ const app: Application = express()
   .use(bodyParser.json())
   .use(cors())
   .use(helmet())
+  .use(fileUpload({
+    createParentPath: true
+  }))
+  .use(express.static('static'))
   .use(traffic_logger)
   .use(router)
+
 
 const startup = () => app.listen(PORT, () => log.info(`Application started on PORT: ${PORT}`))
 

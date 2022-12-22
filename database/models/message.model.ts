@@ -1,15 +1,15 @@
-import {CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model} from "sequelize";
-import sequelize from "../database";
-import { MessageDTO } from '../../src/common/dto/messageDTO'
+import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from 'sequelize'
+import sequelize from '../database'
+import { MessageDTO } from '../../src/common/dto/message.dto'
 
 export class Message extends Model<InferAttributes<Message>, InferCreationAttributes<Message>> {
-  declare id: CreationOptional<number>;
-  declare created_at: CreationOptional<Date>;
+  declare id: CreationOptional<number>
+  declare created_at: CreationOptional<Date>
 
-  declare sender_name: string;
-  declare title: string;
-  declare message: string;
-  declare opened: boolean;
+  declare sender_name: string
+  declare title: string
+  declare message: string
+  declare opened: boolean
 
   public static from_dto = (message_dto: MessageDTO): Message =>
     Message.build({

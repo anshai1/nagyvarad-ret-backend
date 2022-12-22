@@ -5,6 +5,7 @@ import DailyVerseRouter from './modules/daily_verse/daily_verse.router'
 import MessagesRouter from './modules/messages/messages.router'
 import SubscriptionsRouter from './modules/subscriptions/subscriptions.router'
 import MediaRouter from './modules/media/media.router'
+import PresbyterRouter from './modules/presbyter/presbyter.router'
 
 export default express.Router()
   .use('/auth', AuthRouter)
@@ -13,3 +14,4 @@ export default express.Router()
   .use('/messages', MessagesRouter)
   .use('/subscriptions', SubscriptionsRouter)
   .use('/media', MediaRouter)
+  .use('/presbyter', PresbyterRouter)
